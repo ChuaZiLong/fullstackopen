@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant browser
     participant server
@@ -15,3 +16,4 @@ sequenceDiagram
     server->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     server-->>browser: the css file
     deactivate server
+```

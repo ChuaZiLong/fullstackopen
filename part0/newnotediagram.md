@@ -4,7 +4,6 @@ sequenceDiagram
 
     browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note (URL Redirect)
     activate server
-    server-->>server: HTML document
     server->>server: GET https://studies.cs.helsinki.fi/exampleapp/note
     server-->>browser: new note
     server->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json

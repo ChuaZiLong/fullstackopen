@@ -7,9 +7,17 @@ const Header = (props) => {
 const Content = () => {
   return (
     <div>
-      <p>Fundamentals of React 10</p>
-      <p>Using props to pass data 7</p>
-      <p>State of a component 14</p>
+      <Part name='Fundamentals of React' count={10} />
+      <Part name='Using props to pass data' count={7} />
+      <Part name='State of a component' count={14} />
+    </div>
+  )
+}
+
+const Part = (props) => {
+  return (
+    <div>
+      <p>{props.name} {props.count}</p>
     </div>
   )
 }

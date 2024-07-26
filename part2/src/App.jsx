@@ -4,6 +4,7 @@ const Course = (props) => {
   console.log('props parts: ', props.parts)
   console.log('props parts 0: ', props.parts[0].exercises)
   console.log('total parts: ', props.parts.reduce((s, p) => s + p, 0))
+  console.log('I already used reduce in the previous part.')
   return (
     <div>
       <h1>{props.name}</h1>

@@ -79,5 +79,5 @@ const App = () => {
     </div>
   )
 }
-console.log('I already did 2.5 in the previous parts')
+console.log('I already did 2.5 in the previous exercise')
 export default App

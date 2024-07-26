@@ -1,12 +1,16 @@
 const Course = (props) => {
   console.log(props)
   console.log('name: ', props.name)
+  console.log('props parts: ', props.parts)
+  console.log('props parts 0: ', props.parts[0].exercises)
+  console.log('total parts: ', props.parts.reduce((s, p) => s + p, 0))
   return (
     <div>
       <h1>{props.name}</h1>
       <ul>
         {props.parts.map(part => <li>{part.name} {part.exercises}</li>)}
       </ul>
+      <b>total of {props.parts.reduce((a, c) => a + c.exercises, 0)} exercises</b>
     </div>
   )
 }

@@ -42,18 +42,36 @@ const App = () => {
     console.log(persons)
   }
 
-  return (
-    <div>
-      <h2>Filter</h2>
+  const Filter = () => {
+    return (
       <div>filter shown with <form><div><input value={filter} onChange={handleFilterChange}/></div></form></div>
-      <h2>Phonebook</h2>
+    )
+  }
+
+  const PersonForm = () => {
+    return (
       <form onSubmit={addPerson}>
         <div>name: <input value={newName} onChange={handleNameChange}/></div>
         <div>number: <input value={newNumber} onChange={handleNumberChange}/></div>
         <div><button type="submit">add</button></div>
       </form>
-      <h2>Numbers</h2>
+    )
+  }
+
+  const Persons = () => {
+    return (
       <div>{persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person => <div>{person.name} {person.number}</div>)}</div>
+    )
+  }
+
+  return (
+    <div>
+      <h2>Filter</h2>
+      <Filter />
+      <h2>Phonebook</h2>
+      <PersonForm />
+      <h2>Numbers</h2>
+      <Persons />
     </div>
   )
 }

@@ -48,6 +48,12 @@ const App = () => {
     }
     setPersons(persons.concat(nameObject))
     console.log(persons)
+
+    axios
+    .post('http://localhost:3001/persons', nameObject)
+    .then(response => {
+      console.log(response)
+    })
   }
 
   const Filter = () => {

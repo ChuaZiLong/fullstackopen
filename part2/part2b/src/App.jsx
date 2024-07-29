@@ -42,7 +42,11 @@ const App = () => {
     }
     for (let i = 0; i < persons.length; i++) {
       if (persons[i].name === newName) {
-        alert(`${newName} is already added to phonebook`)
+        confirm(`${newName} is already added to phonebook, replace the old number with the new one?`)
+        axios.put(`http://localhost:3001/persons/${i}`, {name: newName, number: newNumber, id: i})
+        let personsCopy = [...persons]
+        personsCopy[i] = {name: newName, number: newNumber, id: i}
+        setPersons(personsCopy)
         return
       }
     }

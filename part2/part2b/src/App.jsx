@@ -37,7 +37,8 @@ const App = () => {
     event.preventDefault()
     const nameObject = {
       name: newName,
-      number: newNumber
+      number: newNumber,
+      id: persons.length.toString()
     }
     for (let i = 0; i < persons.length; i++) {
       if (persons[i].name === newName) {
@@ -54,6 +55,12 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNewName('')
       })
+  }
+
+  const deletePerson = (person) => {
+    confirm(`Delete ${person.name}?`)
+    axios.delete(`http://localhost:3001/persons/${person.id}`)
+    setPersons(persons.filter(p => p.id !== person.id))
   }
 
   const Filter = () => {
@@ -74,7 +81,7 @@ const App = () => {
 
   const Persons = () => {
     return (
-      <div>{persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person => <div>{person.name} {person.number}</div>)}</div>
+      <div>{persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person => <div>{person.name} {person.number} <button type='button' className='deletebtn' onClick={() => deletePerson(person)}>delete</button></div>)}</div>
     )
   }
 

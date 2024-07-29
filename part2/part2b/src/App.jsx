@@ -8,6 +8,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
+  const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -47,6 +48,8 @@ const App = () => {
         let personsCopy = [...persons]
         personsCopy[i] = {name: newName, number: newNumber, id: i}
         setPersons(personsCopy)
+        setSuccessMessage(`${newName} added`)
+        setTimeout(() => {setSuccessMessage(null)}, 5000)
         return
       }
     }
@@ -59,6 +62,8 @@ const App = () => {
         setPersons(persons.concat(response.data))
         setNewName('')
       })
+    setSuccessMessage(`${newName} added`)
+    setTimeout(() => {setSuccessMessage(null)}, 5000)
   }
 
   const deletePerson = (person) => {
@@ -89,11 +94,23 @@ const App = () => {
     )
   }
 
+  const Success = ({message}) => {
+    if (message === null) {
+      return null
+    }
+    return (
+      <div className='success'>
+        {message}
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>Filter</h2>
       <Filter />
       <h2>Phonebook</h2>
+      <Success message={successMessage}/>
       <PersonForm />
       <h2>Numbers</h2>
       <Persons />

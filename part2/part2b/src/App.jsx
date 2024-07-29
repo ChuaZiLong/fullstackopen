@@ -9,6 +9,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [successMessage, setSuccessMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -44,13 +45,18 @@ const App = () => {
     for (let i = 0; i < persons.length; i++) {
       if (persons[i].name === newName) {
         confirm(`${newName} is already added to phonebook, replace the old number with the new one?`)
-        axios.put(`http://localhost:3001/persons/${i}`, {name: newName, number: newNumber, id: i})
+        axios.put(`http://localhost:3001/persons/${i}`, {name: newName, number: newNumber, id: i}).then(response=>console.log('success')).catch(error=>{
+          setErrorMessage(`${newName} was already removed from the server`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+          return
+        })
         let personsCopy = [...persons]
         personsCopy[i] = {name: newName, number: newNumber, id: i}
         setPersons(personsCopy)
         setSuccessMessage(`${newName} added`)
         setTimeout(() => {setSuccessMessage(null)}, 5000)
-        return
       }
     }
     setPersons(persons.concat(nameObject))
@@ -61,6 +67,12 @@ const App = () => {
       .then(response => {
         setPersons(persons.concat(response.data))
         setNewName('')
+      }).catch(error=>{
+        setErrorMessage(`${newName} was already removed from the server`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        return
       })
     setSuccessMessage(`${newName} added`)
     setTimeout(() => {setSuccessMessage(null)}, 5000)
@@ -90,7 +102,7 @@ const App = () => {
 
   const Persons = () => {
     return (
-      <div>{persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person => <div>{person.name} {person.number} <button type='button' className='deletebtn' onClick={() => deletePerson(person)}>delete</button></div>)}</div>
+      <div>{persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(person => <div>{person.name} {person.number} <button type='button' className='deletebtn' onClick={() => {deletePerson(person)}}>delete</button></div>)}</div>
     )
   }
 
@@ -105,12 +117,24 @@ const App = () => {
     )
   }
 
+  const Error = ({message}) => {
+    if (message === null) {
+      return null
+    }
+    return (
+      <div className='error'>
+        {message}
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>Filter</h2>
       <Filter />
       <h2>Phonebook</h2>
       <Success message={successMessage}/>
+      <Error message={errorMessage}/>
       <PersonForm />
       <h2>Numbers</h2>
       <Persons />
